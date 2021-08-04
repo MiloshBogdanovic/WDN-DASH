@@ -4,9 +4,10 @@
     $(document).ready(function() {
       $().ready(function() {
         $sidebar = $('.sidebar');
+        
         $navbar = $('.navbar');
         $main_panel = $('.main-panel');
-
+        
         $full_page = $('.full-page');
 
         $sidebar_responsive = $('body > .navbar-collapse');
@@ -17,6 +18,10 @@
 
         fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
 
+
+        //Set SideNav Color And Background if the values exist in the Local Storage
+        $sidebar.attr('data', localStorage.getItem('side-bar-color') ? localStorage.getItem('side-bar-color') : 'blue');
+        localStorage.getItem('background-color') == 'black' ? $('body').removeClass('white-content') : $('body').addClass('black-content')
 
 
         $('.fixed-plugin a').click(function(event) {
@@ -34,7 +39,7 @@
           $(this).addClass('active');
 
           var new_color = $(this).data('color');
-
+          console.log(new_color)
           if ($sidebar.length != 0) {
             $sidebar.attr('data', new_color);
           }
@@ -50,6 +55,8 @@
           if ($sidebar_responsive.length != 0) {
             $sidebar_responsive.attr('data', new_color);
           }
+          
+          localStorage.setItem('side-bar-color', new_color);
         });
 
         $('.switch-sidebar-mini input').on("switchChange.bootstrapSwitch", function() {
@@ -102,10 +109,12 @@
         });
 
         $('.light-badge').click(function() {
+          localStorage.setItem('background-color', 'white')
           $('body').addClass('white-content');
         });
 
         $('.dark-badge').click(function() {
+          localStorage.setItem('background-color', 'black')
           $('body').removeClass('white-content');
         });
       });
